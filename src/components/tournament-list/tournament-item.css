@@ -1,0 +1,12 @@
+.tournaments-img {
+  object-fit: contain;
+}
+
+.card-title-link {
+  color: black;
+  text-decoration: none;
+}
+
+.card-decoration {
+  background-color: darkkhaki;
+}
