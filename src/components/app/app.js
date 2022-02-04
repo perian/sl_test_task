@@ -1,39 +1,46 @@
 import './app.css';
 import { useDispatch, useSelector} from 'react-redux';
 import { fetchTournaments } from '../data-service/data-service'
-import { useEffect } from 'react';
-  
-function App() {
+import { useEffect, useState } from 'react';
+
+export default function App() {
   const dispatch = useDispatch();
   const tournaments = useSelector(state => state.tournaments.tournaments);
+  const isMoreData = useSelector(state => state.tournaments.dataLimit);
+  const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchTournaments(tournaments))
+    dispatch(fetchTournaments(`&page=1`,tournaments));
+    setPageCount(pageCount + 1);
   },[]);
 
+
   const getMoreTournaments = () => {
-    dispatch(fetchTournaments(tournaments))
+    dispatch(fetchTournaments(`&page=${pageCount}`, tournaments));
+    setPageCount(pageCount + 1);
   }
   
-  const Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  const getMonth = (month) => {
-    let monthIndex = month.slice(5, 7);
-
-    if (monthIndex.slice(0, 1) == 0) {
-      monthIndex = monthIndex.slice(1, 2);
-      return Months[monthIndex - 1];
-    }
-
-    return Months[monthIndex - 1];
+  const Months = {
+    '01': 'January',
+    '02': 'February',
+    '03': 'March',
+    '04': 'April',
+    '05': 'May',
+    '06': 'June',
+    '07': 'July',
+    '08': 'August',
+    '09': 'September',
+    '10': 'October',
+    '11': 'November',
+    '12': 'December',
   }
 
   const getFormatedDate = (date) => {
     const year = date.slice(0, 4);
-    const month = getMonth(date);
+    const month = Months[date.slice(5, 7)];
     const day = date.slice(8, 10);
 
-    return `${day} ${month}, ${year} year`;
+    return `${day} ${month}, ${year}`;
   }
 
   const TournamentItem = () => {
@@ -59,9 +66,12 @@ function App() {
             )}
           </ul>
            <div className='d-grid gap-2 col-3 mx-auto'>
-              <button className='btn btn-primary' onClick={() => getMoreTournaments()} >Need MORE tournaments!</button>
+              <button className='btn btn-primary' 
+                      onClick={() => getMoreTournaments()} disabled={isMoreData}
+              >
+              Need MORE tournaments!
+              </button>
           </div>
-          
         </section>
     )
   }
@@ -77,4 +87,3 @@ function App() {
     </div>
   );
 }
-export default App;
