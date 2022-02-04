@@ -1,0 +1,18 @@
+.card-decoration {
+  background-color: darkkhaki;
+}
+
+.card-img-top {
+  text-align: center;
+}
+
+.tournaments-img {
+  object-fit: contain;
+}
+
+
+.card-title-link {
+  color: black;
+  text-decoration: none;
+}
+
