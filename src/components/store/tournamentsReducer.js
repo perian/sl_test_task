@@ -22,4 +22,3 @@ export const getTournamentsAction = (data) => (
   {type: ADD_TOURNAMENTS, data}
 )
 
-// data.length < 20 ? defaultState.dataLimit = 1 : defaultState.dataLimit = 0
