@@ -6,7 +6,7 @@ import './app'
 
 export default function Main() {
   const dispatch = useDispatch();
-  const tournaments = useSelector(state => state.tournaments.tournaments);
+  const tournaments = useSelector(state => state.tournaments.all);
   const isOutOfData = useSelector(state => state.tournaments.dataLimit);
   const [pageCount, setPageCount] = useState(1);
 

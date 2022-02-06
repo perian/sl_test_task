@@ -10,7 +10,7 @@ export default function App() {
     <div className="App">
       <Routes>
         <Route index element={<Main />} />
-        <Route path="tournament" element={<Tournament />} />
+        <Route path="tournament/:id" element={<Tournament />} />
         <Route path="*" element={<ErrorPage/>} />
       </Routes>
     </div>

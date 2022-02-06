@@ -3,7 +3,7 @@ import { TournamentItem } from "./tournament-item"
 import './tournament-list.css';
 
 export const TournamentList = () => {
-  const tournaments = useSelector(state => state.tournaments.tournaments);
+  const tournaments = useSelector(state => state.tournaments.all);
 
   return (
     <section className="container">

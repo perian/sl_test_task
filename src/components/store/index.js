@@ -5,6 +5,6 @@ import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   tournaments: tournamentsReducer,
-})
+});
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

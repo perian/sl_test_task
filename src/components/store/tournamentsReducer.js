@@ -1,24 +1,31 @@
 const defaultState = {
-  tournaments: [],
+  all: [],
   dataLimit: false,
+  tournamentSettings: null
 }
 
 const ADD_TOURNAMENTS = 'ADD_TOURNAMENTS';
+const ADD_TOURNAMENT_SETTINGS = 'ADD_TOURNAMENT_SETTINGS';
 
-export const tournamentsReducer = (state = defaultState, payload) => {
-
-  switch (payload.type) {
+export const tournamentsReducer = (state = defaultState, action) => {
+  switch (action.type) {
     case ADD_TOURNAMENTS:
       return {...state, 
-              tournaments: [...state.tournaments, ...payload.data], 
-              dataLimit: payload.data.length < 20 ? defaultState.dataLimit = true : defaultState.dataLimit = false,
+              all: [...state.all, ...action.payload], 
+              dataLimit: action.payload.length < 20 ? defaultState.dataLimit = true : defaultState.dataLimit = false,
             }
+    case ADD_TOURNAMENT_SETTINGS:
+      return {...state, tournamentSettings: action.payload}
     default:
       return state;
   }
 }
 
-export const getTournamentsAction = (data) => (
-  {type: ADD_TOURNAMENTS, data}
+export const getTournamentsAction = (payload) => (
+  {type: ADD_TOURNAMENTS, payload}
+)
+
+export const getTournamentSettingsAction = (payload) => (
+  {type: ADD_TOURNAMENT_SETTINGS, payload}
 )
 
