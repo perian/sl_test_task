@@ -1,10 +1,9 @@
-
 import { Route, Routes } from 'react-router-dom';
-import { TournamentList } from '../tournament-list/tournament-list';
+import TournamentList from '../tournament-list/tournament-list';
 import { Tournament } from '../tournament-list/tournament-settings';
-import ErrorPage from '../error-page/errorPage'
+import ErrorPage from '../error-page/errorPage';
 
-export default function App() {
+const App = () => {
   return (
     <div className="App">
       <Routes>
@@ -15,3 +14,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
