@@ -1,5 +1,4 @@
 import { getTournamentsAction, getTournamentSettingsAction } from "../store/tournamentsReducer";
-
 const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
 
 export const fetchTournaments = (page) => {
@@ -21,3 +20,13 @@ export const fetchTournamentSettings = (id) => {
       })
   }
 }
+
+// export const fetchTournamentsAll = () => {
+//   return function(dispatch) {
+//     fetch(`https://api.gamestars.tv/streamly/v2/tournaments?game=pubg4x4mobile&page=1`)
+//       .then(response => response.json())
+//       .then(json => {
+//         dispatch(getTournamentsAction(json))
+//       })
+//   }
+// }

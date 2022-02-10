@@ -1,4 +1,5 @@
 export const getTournamentsAction = (payload) => (
+  console.log(payload),
   {type: ADD_TOURNAMENTS, payload}
 )
 

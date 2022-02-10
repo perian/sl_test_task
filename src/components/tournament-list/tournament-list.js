@@ -1,20 +1,14 @@
 import React from 'react';
-import { connect, useDispatch, useSelector} from 'react-redux';
+import { connect, useDispatch} from 'react-redux';
 import { fetchTournaments } from '../data-service/data-service'
-import { useEffect, useState } from 'react';
 import { TournamentItem } from "./tournament-item";
 import './tournament-list.css';
 
 export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-      dispatch(fetchTournaments(`&page=1`, tournaments))
-    }, [ ]);
-    
+  console.log(isOutOfData)
   const getMoreTournaments = () => {
     dispatch(fetchTournaments(`&page=${pageNumber}`, tournaments));
-    console.log(pageNumber);
   }
 
   const items = tournaments.map(tournament => 
@@ -23,13 +17,12 @@ export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
       key={tournament.id}/>
   )
   
-  const button = 
-    <div className='text-center col-3 mx-auto'>
-      <button className='btn btn-primary mb-3' 
-              onClick={() => getMoreTournaments()} disabled={isOutOfData}>
-              Need MORE tournaments!
-      </button>
-    </div>
+  const button = <div className='text-center col-3 mx-auto'>
+                    <button className='btn btn-primary mb-3' 
+                            onClick={() => getMoreTournaments()} disabled={isOutOfData}>
+                            Need MORE tournaments!
+                    </button>
+                  </div>
 
   return (
     <section className="container">
