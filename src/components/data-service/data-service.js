@@ -1,12 +1,23 @@
-import { getTournamentsAction, getTournamentSettingsAction } from "../store/tournamentsReducer";
+import { getTournamentsAction, getMoreTournamentsAction, getTournamentSettingsAction } from '../actions/actions';
+
 const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
 
-export const fetchTournaments = (page) => {
+export const fetchTournaments = () => {
+  return function(dispatch) {
+    fetch(`${_baseUrl}?game=pubg4x4mobile&page=1`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(getTournamentsAction(json))
+      })
+  }
+}
+
+export const fetchMoreTournaments = (page) => {
   return function(dispatch) {
     fetch(`${_baseUrl}?game=pubg4x4mobile${page}`)
       .then(response => response.json())
       .then(json => {
-        dispatch(getTournamentsAction(json))
+        dispatch(getMoreTournamentsAction(json))
       })
   }
 }
@@ -20,13 +31,3 @@ export const fetchTournamentSettings = (id) => {
       })
   }
 }
-
-// export const fetchTournamentsAll = () => {
-//   return function(dispatch) {
-//     fetch(`https://api.gamestars.tv/streamly/v2/tournaments?game=pubg4x4mobile&page=1`)
-//       .then(response => response.json())
-//       .then(json => {
-//         dispatch(getTournamentsAction(json))
-//       })
-//   }
-// }
