@@ -2,22 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch} from 'react-redux';
 import { fetchMoreTournaments, fetchTournaments } from '../data-service/data-service'
 import { TournamentItem } from './tournament-item';
+import { createSelector } from 'reselect'
 import './tournament-list.css';
+import { getFilteredTournamentsAction } from '../actions/actions';
 
 export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
-  const [notUploaded, setNotUploaded] = useState(false);
 
   useEffect(() => {
-      dispatch(fetchTournaments());
+    dispatch(fetchTournaments());
   }, [ ]);
 
   const getMoreTournaments = () => {
     dispatch(fetchMoreTournaments(`&page=${pageNumber}`, tournaments));
   }
 
-  const items = tournaments.map(tournament => 
+  let items = tournaments.map(tournament => 
     <TournamentItem 
       tournament={tournament} 
       key={tournament.id}/>
@@ -30,14 +31,23 @@ export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
                     </button>
                   </div>
 
+  const selectValue = () => {
+    return value
+  }
+  
+  const selectFilteredTournaments = createSelector(
+    state => state.tournaments.all,
+    selectValue,
+    (all,selectValue) => all.filter(t => t.name.toLowerCase().includes(selectValue.toLowerCase()))
+    .sort((a, b) => a - b)
+  )
   const filter = (tournaments, value) => {
     return tournaments.filter(t => t.name.toLowerCase().includes(value.toLocaleLowerCase()))
       .sort((a, b) => a - b)
   }
 
   const filterTournaments = (evt) => {
-    
-    setValue(evt.target.value)
+    setValue(evt.target.value);
   }
   
   return (
@@ -49,7 +59,8 @@ export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
             className='form-control mb-3'
             type='text' 
             value={value} 
-            onChange={(evt)=>filterTournaments(evt)} placeholer='Search'
+            onChange={(evt)=>filterTournaments(evt)} 
+            placeholer='Search'
           />
           <ul className='tournaments-list'>
             {items}
@@ -62,14 +73,6 @@ export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
     </section>
   )
 }
-
-// const state = () => {return store.getState();}
-// const value = () => {return 'pmgc'}
-// const selectFilter = createSelector(
-//   state => state.tournaments.all, value,
-//   (all,value) => all.filter(t => t.name.toLowerCase().includes(value.toLocaleLowerCase()))
-//   .sort((a, b) => a - b)
-// )
 
 const mapStateToProps = (state) => {
   return {
