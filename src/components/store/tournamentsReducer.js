@@ -1,7 +1,7 @@
 const defaultState = {
   all: [],
   isOutOfData: false,
-  tournamentSettings: null,
+  tournament: {},
   pageNumber: 2,
   filteredTournaments: null
 }
@@ -22,7 +22,7 @@ export const tournamentsReducer = (state = defaultState, action) => {
               pageNumber: action.payload.pageNumber
             }
     case ADD_TOURNAMENT_SETTINGS:
-      return {...state, tournamentSettings: action.payload}
+      return {...state, tournament: action.payload}
     case ADD_FILTERED_TOURNAMENTS:
       return {...state, all: action.payload}
     default:

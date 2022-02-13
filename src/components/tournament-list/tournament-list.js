@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch} from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { fetchMoreTournaments, fetchTournaments } from '../data-service/data-service'
 import { TournamentItem } from './tournament-item';
 import { createSelector } from 'reselect'
 import './tournament-list.css';
-import { getFilteredTournamentsAction } from '../actions/actions';
 
 export const TournamentList = ({tournaments, isOutOfData, pageNumber}) => {
   const dispatch = useDispatch();
