@@ -14,14 +14,12 @@ const ADD_TOURNAMENT_SETTINGS = 'ADD_TOURNAMENT_SETTINGS';
 export const tournamentsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_TOURNAMENTS:
-      return {...state, 
-              all: state.all.length ? [...state.all] : action.payload
-            }
+      return {...state, all: state.all.length ? [...state.all] : action.payload}
     case ADD_MORE_TOURNAMENTS:
       return {...state, 
-              all: [...state.all, ...action.payload],
-              isOutOfData: action.payload.length < 20 ? state.isOutOfData = true : state.isOutOfData = false,
-              pageNumber: ++state.pageNumber
+              all: [...state.all, ...action.payload.data],
+              isOutOfData: action.payload.isOutOfData,
+              pageNumber: action.payload.pageNumber
             }
     case ADD_TOURNAMENT_SETTINGS:
       return {...state, tournamentSettings: action.payload}
@@ -31,4 +29,3 @@ export const tournamentsReducer = (state = defaultState, action) => {
       return state;
   }
 }
-
