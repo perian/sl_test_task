@@ -7,7 +7,7 @@ export const TournamentItem = (props) => {
   const {tournament} = props;
 
   return (
-    <li className='card card-decoration' 
+    <li className='card card-decoration pt-2' 
         key={tournament.id}>
       <Link className='card-img-top' to={`/tournament/${tournament.id}`}>
         <img className='tournaments-img' src={tournament.streamly_logo} width="300" height="150" alt='tournament logo'/>

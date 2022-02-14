@@ -3,7 +3,8 @@ const defaultState = {
   isOutOfData: false,
   tournament: {},
   pageNumber: 2,
-  filteredTournaments: null
+  searchTitle: '',
+  filteredTournaments: []
 }
 
 const ADD_TOURNAMENTS = 'ADD_TOURNAMENTS';
@@ -16,15 +17,20 @@ export const tournamentsReducer = (state = defaultState, action) => {
     case ADD_TOURNAMENTS:
       return {...state, all: state.all.length ? [...state.all] : action.payload}
     case ADD_MORE_TOURNAMENTS:
-      return {...state, 
-              all: [...state.all, ...action.payload.data],
-              isOutOfData: action.payload.isOutOfData,
-              pageNumber: action.payload.pageNumber
-            }
+      return {
+        ...state, 
+        all: [...state.all, ...action.payload.data],
+        isOutOfData: action.payload.isOutOfData,
+        pageNumber: action.payload.pageNumber
+      }
     case ADD_TOURNAMENT_SETTINGS:
       return {...state, tournament: action.payload}
     case ADD_FILTERED_TOURNAMENTS:
-      return {...state, all: action.payload}
+      return {
+        ...state, 
+        filteredTournaments: action.payload.data, 
+        searchTitle: action.payload.title
+      }
     default:
       return state;
   }

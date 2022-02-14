@@ -7,14 +7,15 @@ import { getFormatedDate } from '../utils/utils';
 const Tournament = ({tournament}) => {
   const dispatch = useDispatch();
   const {id} = useParams();
-
+  console.log('rere ');
+  
   useEffect(() => {
     dispatch(fetchTournamentSettings(`${id}`));
   }, [ ]);
 
   return (
     <div className='container'>
-    <div className='card card-decoration'>
+    <div className='card card-decoration pt-3'>
       <img className='tournaments-img mx-auto' src={tournament.streamly_logo} width="300" height="150" alt='tournament logo'/>
       <div className='card-body'>
         <h5 className='card-title text-center fs-2'>

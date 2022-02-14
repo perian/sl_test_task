@@ -20,6 +20,11 @@ export const getMoreTournamentsAction = (payload) => (
   }}
 )
 
-export const getFilteredTournamentsAction = (payload) => (
-  {type: ADD_FILTERED_TOURNAMENTS, payload}
+export const getFilteredTournamentsAction = (payload, title) => (
+  {type: ADD_FILTERED_TOURNAMENTS, 
+    payload: {
+      data: title ? payload : [], 
+      title: title
+    }
+  }
 )
