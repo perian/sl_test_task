@@ -7,8 +7,8 @@ import './tournament-list.css';
 import { getFilteredTournamentsAction } from '../actions/actions';
 import { store } from '../store';
 
-export const TournamentList = ({tournaments, isOutOfData, pageNumber, filteredTournaments, searchTitle}) => {
-  const dispatch = useDispatch();
+export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, filteredTournaments, searchTitle}) => {
+  // const dispatch = useDispatch();
   const [value, setValue] = useState('');
 
   useEffect(() => {

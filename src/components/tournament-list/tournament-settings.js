@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import { fetchTournamentSettings } from '../data-service/data-service';
 import { getFormatedDate } from '../utils/utils';
 
-const Tournament = ({tournament}) => {
-  const dispatch = useDispatch();
+const Tournament = ({dispatch, tournament}) => {
   const {id} = useParams();
-  console.log('rere ');
-  
+  console.log('rerender');
+
   useEffect(() => {
     dispatch(fetchTournamentSettings(`${id}`));
   }, [ ]);
