@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { fetchMoreTournaments, fetchTournaments } from '../data-service/data-service';
 import { TournamentItem } from './tournament-item';
 import { createSelector } from 'reselect'
 import './tournament-list.css';
-import { getFilteredTournamentsAction, getMoreTournamentsAction } from '../actions/actions';
+import { filterByTitleAction } from '../actions/actions';
 import { store } from '../store';
 
-export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, filteredTournaments, searchTitle}) => {
+export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, searchByTitle}) => {
+  
   useEffect(() => {
     dispatch(fetchTournaments());
   }, [  ]);
@@ -16,12 +17,20 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
     dispatch(fetchMoreTournaments(pageNumber + 1));
   }
 
-  console.log('pageNumber: ', pageNumber, ', filteredTournaments ', filteredTournaments.length);
-  
-  let data;
-  filteredTournaments.length && searchTitle ? data = filteredTournaments : data = tournaments
+  let filtersData = () => {
+    const newArray = [...tournaments]
+                    .filter(t => t.name.toLowerCase().includes(searchByTitle.toLocaleLowerCase()))
 
-  let items = data.map(tournament => 
+    if (searchByTitle) {
+      return newArray.sort((a, b) => a.name.localeCompare(b.name))
+    }
+
+    return newArray
+  }
+
+  let filteredData = filtersData();
+
+  let items = filteredData.map(tournament => 
     <TournamentItem 
       tournament={tournament} 
       key={tournament.id}/>
@@ -35,11 +44,6 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
                     </button>
                   </div>
 
-  const filtered = (data, evt) => {
-    return data.filter(t => t.name.toLowerCase().includes(evt.target.value.toLocaleLowerCase()))
-    .sort((a, b) => `${a}`.localeCompare(b))
-  } 
-
   return (
     <section className='container'>
       {tournaments.length
@@ -48,11 +52,10 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
           Search: <input 
             className='form-control mb-3'
             type='text' 
-            value={searchTitle}
+            value={searchByTitle}
             onChange={
-              (evt)=>{dispatch(
-                  getFilteredTournamentsAction(filtered(tournaments, evt), evt.target.value)
-                )}}
+              (evt)=>{dispatch(filterByTitleAction(evt.target.value))}
+            }
             placeholer='Search'
           />
           <ul className='tournaments-list'>
@@ -72,8 +75,7 @@ const mapStateToProps = (state) => {
     tournaments: state.tournaments.all,
     isOutOfData: state.tournaments.isOutOfData,
     pageNumber: state.tournaments.pageNumber,
-    filteredTournaments: state.tournaments.filteredTournaments,
-    searchTitle: state.tournaments.searchTitle,
+    searchByTitle: state.tournaments.searchByTitle,
   };
 };
 
