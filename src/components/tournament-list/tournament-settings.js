@@ -6,11 +6,12 @@ import { getFormatedDate } from '../utils/utils';
 
 const Tournament = ({dispatch, tournament}) => {
   const {id} = useParams();
-  console.log('rerender');
+
 
   useEffect(() => {
     dispatch(fetchTournamentSettings(`${id}`));
   }, [ ]);
+  console.log('rerender');
 
   return (
     <div className='container'>

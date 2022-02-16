@@ -2,7 +2,7 @@ const defaultState = {
   all: [],
   isOutOfData: false,
   tournament: {},
-  pageNumber: 2,
+  pageNumber: 1,
   searchTitle: '',
   filteredTournaments: []
 }
@@ -15,13 +15,16 @@ const ADD_TOURNAMENT_SETTINGS = 'ADD_TOURNAMENT_SETTINGS';
 export const tournamentsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_TOURNAMENTS:
-      return {...state, all: state.all.length ? [...state.all] : action.payload}
-    case ADD_MORE_TOURNAMENTS:
       return {
         ...state, 
         all: [...state.all, ...action.payload.data],
         isOutOfData: action.payload.isOutOfData,
-        pageNumber: action.payload.pageNumber
+        pageNumber: action.payload.page,
+      }
+    case ADD_MORE_TOURNAMENTS:
+      return {
+        ...state, 
+        pageNumber: action.payload,
       }
     case ADD_TOURNAMENT_SETTINGS:
       return {...state, tournament: action.payload}

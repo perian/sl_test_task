@@ -1,28 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import { fetchMoreTournaments, fetchTournaments } from '../data-service/data-service';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTournaments } from '../data-service/data-service';
 import { TournamentItem } from './tournament-item';
 import { createSelector } from 'reselect'
 import './tournament-list.css';
-import { getFilteredTournamentsAction } from '../actions/actions';
-import { store } from '../store';
+import { getFilteredTournamentsAction, getMoreTournamentsAction } from '../actions/actions';
 
-export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, filteredTournaments, searchTitle}) => {
-  // const dispatch = useDispatch();
-  const [value, setValue] = useState('');
+export const TournamentList = () => {
+    const dispatch = useDispatch()
+    const state  = useSelector(state => state)
+    const tournaments = useSelector(state => state.tournaments.all)
+    const isOutOfData = useSelector(state => state.tournaments.isOutOfData)
+    let pageNumber = useSelector(state => state.tournaments.pageNumber)
+    const filteredTournaments = useSelector(state => state.tournaments.filteredTournaments)
+    const searchTitle = useSelector(state => state.tournaments.searchTitle)
 
   useEffect(() => {
-    if (!tournaments.length) {
-      dispatch(fetchTournaments());
-    }
-  }, [ ]);
+    dispatch(fetchTournaments(pageNumber));
+  }, [ pageNumber ]);
   
   const getMoreTournaments = () => {
-    dispatch(fetchMoreTournaments(`&page=${pageNumber}`, tournaments));
+    dispatch(getMoreTournamentsAction(++pageNumber));
   }
 
+  const filteredSelector = createSelector(
+    state => state.tournaments.all,
+    (all) => all.filter(t => t.name.toLowerCase().includes(searchTitle.toLocaleLowerCase())).sort((a, b) => a -b))
+    
+  console.log('render', pageNumber, `state: `, state.tournaments.all.length);
+  const filteredData = filteredSelector(state)
   let data;
-  filteredTournaments.length && searchTitle ? data = filteredTournaments : data = tournaments
+  filteredData.length && searchTitle ? data = filteredTournaments : data = tournaments
 
   let items = data.map(tournament => 
     <TournamentItem 
@@ -37,8 +45,6 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
                             Need MORE tournaments!
                     </button>
                   </div>
-
-  console.log('searchTitle: ', searchTitle, ', filteredTournaments ', filteredTournaments.length);
 
   const filtered = (data, evt) => {
     return data.filter(t => t.name.toLowerCase().includes(evt.target.value.toLocaleLowerCase()))
@@ -72,14 +78,4 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    tournaments: state.tournaments.all,
-    isOutOfData: state.tournaments.isOutOfData,
-    pageNumber: state.tournaments.pageNumber,
-    filteredTournaments: state.tournaments.filteredTournaments,
-    searchTitle: state.tournaments.searchTitle,
-  };
-};
-
-export default connect(mapStateToProps)(TournamentList);
+export default TournamentList;
