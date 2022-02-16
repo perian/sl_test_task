@@ -11,12 +11,10 @@ export const getTournamentSettingsAction = (payload) => (
   {type: ADD_TOURNAMENT_SETTINGS, payload}
 )
 
-let pageNumber = 2;
 export const getMoreTournamentsAction = (payload) => (
   {type: ADD_MORE_TOURNAMENTS, payload: {
     data: payload,
     isOutOfData: payload.length < 20 ? true : false,
-    pageNumber: ++pageNumber
   }}
 )
 

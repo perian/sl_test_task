@@ -1,24 +1,29 @@
 import { getTournamentsAction, getMoreTournamentsAction, getTournamentSettingsAction } from '../actions/actions';
+import axios from 'axios';
 
 const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
 
-export const fetchTournaments = () => {
-  return function(dispatch) {
-    fetch(`${_baseUrl}?game=pubg4x4mobile&page=1`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getTournamentsAction(json))
-      })
+export const fetchTournaments = (page = 1) => {
+  try {
+    return async function(dispatch) {
+      const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=${page}`);
+
+      dispatch(getTournamentsAction(response.data));
+    } 
+  } catch (error) {
+    console.log(error);
   }
 }
 
 export const fetchMoreTournaments = (page) => {
-  return function(dispatch) {
-    fetch(`${_baseUrl}?game=pubg4x4mobile${page}`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getMoreTournamentsAction(json))
-      })
+  try {
+    return async function(dispatch) {
+      const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=${page}`);
+  
+      dispatch(getMoreTournamentsAction(response.data));
+    } 
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -31,3 +36,31 @@ export const fetchTournamentSettings = (id) => {
       })
   }
 }
+
+// import { getTournamentsAction, getTournamentSettingsAction } from '../actions/actions';
+
+// const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
+
+// export const fetchTournaments = (page = 1) => {
+//   try {
+//     return async function(dispatch) {
+//       const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=${page}`);
+  
+//       dispatch(getTournamentsAction(response.data));
+//     } 
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// export const fetchTournamentSettings = (id) => {
+//   try {
+//     return async function(dispatch) {
+//       const response = await axios.get(`${_baseUrl}/${id}/settings`);
+  
+//       dispatch(getTournamentSettingsAction(response.data))
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

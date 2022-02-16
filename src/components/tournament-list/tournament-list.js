@@ -4,23 +4,20 @@ import { fetchMoreTournaments, fetchTournaments } from '../data-service/data-ser
 import { TournamentItem } from './tournament-item';
 import { createSelector } from 'reselect'
 import './tournament-list.css';
-import { getFilteredTournamentsAction } from '../actions/actions';
+import { getFilteredTournamentsAction, getMoreTournamentsAction } from '../actions/actions';
 import { store } from '../store';
 
 export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, filteredTournaments, searchTitle}) => {
-  // const dispatch = useDispatch();
-  const [value, setValue] = useState('');
-
   useEffect(() => {
-    if (!tournaments.length) {
-      dispatch(fetchTournaments());
-    }
-  }, [ ]);
+    dispatch(fetchTournaments());
+  }, [  ]);
   
   const getMoreTournaments = () => {
-    dispatch(fetchMoreTournaments(`&page=${pageNumber}`, tournaments));
+    dispatch(fetchMoreTournaments(pageNumber + 1));
   }
 
+  console.log('pageNumber: ', pageNumber, ', filteredTournaments ', filteredTournaments.length);
+  
   let data;
   filteredTournaments.length && searchTitle ? data = filteredTournaments : data = tournaments
 
@@ -37,8 +34,6 @@ export const TournamentList = ({dispatch, tournaments, isOutOfData, pageNumber, 
                             Need MORE tournaments!
                     </button>
                   </div>
-
-  console.log('searchTitle: ', searchTitle, ', filteredTournaments ', filteredTournaments.length);
 
   const filtered = (data, evt) => {
     return data.filter(t => t.name.toLowerCase().includes(evt.target.value.toLocaleLowerCase()))
