@@ -14,7 +14,7 @@ const SEARCH_BY_TITLE = 'SEARCH_BY_TITLE';
 export const tournamentsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_TOURNAMENTS:
-      return {...state, all: state.all.length ? [...state.all] : action.payload}
+      return {...state, all: action.payload}
     case ADD_MORE_TOURNAMENTS:
       return {
         ...state, 

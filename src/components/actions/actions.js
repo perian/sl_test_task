@@ -1,15 +1,10 @@
 const ADD_TOURNAMENTS = 'ADD_TOURNAMENTS';
 const ADD_MORE_TOURNAMENTS = 'ADD_MORE_TOURNAMENTS';
-const ADD_FILTERED_TOURNAMENTS = 'ADD_FILTERED_TOURNAMENTS';
 const ADD_TOURNAMENT_SETTINGS = 'ADD_TOURNAMENT_SETTINGS';
 const SEARCH_BY_TITLE = 'SEARCH_BY_TITLE';
 
 export const getTournamentsAction = (payload, page) => (
-  {type: ADD_TOURNAMENTS, payload: {
-    data: payload, 
-    isOutOfData: payload.length < 20 ? true : false,
-    page,
-  }}
+  {type: ADD_TOURNAMENTS, payload}
 )
 
 export const getTournamentSettingsAction = (payload) => (
