@@ -1,33 +1,20 @@
+import axios from 'axios';
 import { getTournamentsAction, getMoreTournamentsAction, getTournamentSettingsAction } from '../actions/actions';
 
 const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
 
-export const fetchTournaments = () => {
-  return function(dispatch) {
-    fetch(`${_baseUrl}?game=pubg4x4mobile&page=1`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getTournamentsAction(json))
-      })
-  }
-}
+export const fetchTournaments = (page) => {
+  return async function(dispatch) {
+    const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=${page}`);
 
-export const fetchMoreTournaments = (page) => {
-  return function(dispatch) {
-    fetch(`${_baseUrl}?game=pubg4x4mobile${page}`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getMoreTournamentsAction(json))
-      })
+    dispatch(getTournamentsAction(response.data, page));
   }
 }
 
 export const fetchTournamentSettings = (id) => {
-  return function(dispatch) {
-    fetch(`${_baseUrl}/${id}/settings`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(getTournamentSettingsAction(json))
-      })
+  return async function(dispatch) {
+    const response = await axios.get(`${_baseUrl}/${id}/settings`);
+
+    dispatch(getTournamentSettingsAction(response.data))
   }
 }
