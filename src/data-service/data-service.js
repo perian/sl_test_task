@@ -3,10 +3,10 @@ import axios from 'axios';
 
 const _baseUrl = `https://api.gamestars.tv/streamly/v2/tournaments`;
 
-export const fetchTournaments = (page = 1) => {
+export const fetchTournaments = () => {
   try {
     return async function(dispatch) {
-      const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=${page}`);
+      const response = await axios.get(`${_baseUrl}?game=pubg4x4mobile&page=1`);
 
       dispatch(getTournamentsAction(response.data));
     } 
@@ -38,4 +38,3 @@ export const fetchTournamentSettings = (id) => {
     console.log(error);
   }
 }
-

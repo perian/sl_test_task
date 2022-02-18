@@ -1,43 +1,31 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchTournaments } from '../data-service/data-service';
-import { filterByTitleAction } from '../actions/actions';
 import Items from './tournament-items';
-import GetMoreButton from './get-more-button';
+import Button from './button';
 import './tournament-list.css';
+import { fetchTournaments } from '../../data-service/data-service';
+import Input from './input';
+import './tournament-list';
 
-export const TournamentList = ({dispatch, tournaments, searchByTitle, filterByTitle, getTournaments}) => {
-
+export const TournamentList = ({tournaments, getTournaments}) => {
   useEffect(() => {
     if (!tournaments.length) {
       getTournaments();
     }
   }, [  ]);
 
-  console.log('render');
-
   return (
     <section className='container'>
+      <Input/>
       {tournaments.length
-        ?
-        <React.Fragment>
-          <input 
-            className='form-control mb-3'
-            type='text' 
-            value={searchByTitle}
-            onChange={
-              (evt)=>{filterByTitle(evt.target.value)}
-            }
-            placeholer='Search'
-          />
-          <ul className='tournaments-list'>
-            <Items/>
-          </ul>
-          <GetMoreButton/>
-        </React.Fragment>
+        ? 
+        <ul className='list-group d-grid gap-3 text-white mb-3'>
+          <Items/>
+        </ul>
         :
-        <div className='text-center fs-2'>Загружаем турниры</div>
+        <div className='text-center fs-3'>Загружаем турниры</div>
       }
+      <Button/>
     </section>
   )
 }
@@ -45,14 +33,12 @@ export const TournamentList = ({dispatch, tournaments, searchByTitle, filterByTi
 const mapStateToProps = (state) => {
   return {
     tournaments: state.tournaments.all,
-    searchByTitle: state.tournaments.searchByTitle,
-  };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTournaments: () => dispatch(fetchTournaments()),
-    filterByTitle: (title) => dispatch(filterByTitleAction(title)),
+    getTournaments: () => dispatch(fetchTournaments ()),
   }
 }
 

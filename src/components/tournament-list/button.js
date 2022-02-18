@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMoreTournaments } from "../data-service/data-service";
+import { fetchMoreTournaments } from "../../data-service/data-service";
 
-const GetMoreButton = () => {
+const Button = () => {
   const dispatch = useDispatch();
   const isOutOfData = useSelector(state => state.tournaments.isOutOfData);
   const pageNumber = useSelector(state => state.tournaments.pageNumber);
@@ -21,4 +21,4 @@ const GetMoreButton = () => {
   )
 }
 
-export default GetMoreButton;
+export default Button;

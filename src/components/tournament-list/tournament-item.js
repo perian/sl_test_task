@@ -1,20 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getFormatedDate } from '../utils/utils';
-import './tournament-item.css';
 
 export const TournamentItem = (props) => {
   const {tournament} = props;
 
   return (
-    <li className='card card-decoration pt-2' 
+    <li className='card bg-secondary pt-2' 
         key={tournament.id}>
-      <Link className='card-img-top' to={`/tournament/${tournament.id}`}>
-        <img className='tournaments-img' src={tournament.streamly_logo} width="250" height="100" alt='tournament logo'/>
+      <Link className='card-img-top text-center' to={`/tournament/${tournament.id}`}>
+        <img className='img-fit' src={tournament.streamly_logo} width="250" height="100" alt='tournament logo'/>
       </Link>
       <div className='card-body'>
         <h5 className='card-title'>
-          <Link className='card-title-link' to={`/tournament/${tournament.id}`}>
+          <Link className='text-white text-decoration-none' to={`/tournament/${tournament.id}`}>
             {tournament.name}
           </Link>
         </h5>
