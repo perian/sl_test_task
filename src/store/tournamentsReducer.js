@@ -20,7 +20,7 @@ export const tournamentsReducer = (state = defaultState, action) => {
         isOutOfData: action.payload.isOutOfData,
         pageNumber: state.pageNumber + 1
       }
-    case SEARCH_BY_TITLE :
+    case SEARCH_BY_TITLE:
       return {...state, searchByTitle: action.payload}
     default:
       return state;

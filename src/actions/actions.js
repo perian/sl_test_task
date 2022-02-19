@@ -3,7 +3,7 @@ const ADD_MORE_TOURNAMENTS = 'ADD_MORE_TOURNAMENTS';
 const ADD_TOURNAMENT_SETTINGS = 'ADD_TOURNAMENT_SETTINGS';
 const SEARCH_BY_TITLE = 'SEARCH_BY_TITLE';
 
-export const getTournamentsAction = (payload, page) => (
+export const getTournamentsAction = (payload) => (
   {type: ADD_TOURNAMENTS, payload}
 )
 

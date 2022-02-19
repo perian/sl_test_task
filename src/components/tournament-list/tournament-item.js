@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getFormatedDate } from '../utils/utils';
+import { getFormatedDate } from '../utils/utils'; 
 
 export const TournamentItem = (props) => {
   const {tournament} = props;

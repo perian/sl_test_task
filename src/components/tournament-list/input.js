@@ -1,9 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { filterByTitleAction } from "../../actions/actions";
+import debounce from 'lodash.debounce'
 
 const Input = () => {
   const dispatch = useDispatch();
-  const searchByTitle = useSelector(state => state.tournaments.searchByTitle);
+  const [searchValue, setSearchValue] = useState('')
+
+  const onChange = evt => {
+    setSearchValue(evt.target.value)
+  }
+
+  const updateQuery = () => {
+    dispatch(filterByTitleAction(searchValue))
+  };
+
+  const delayedQuery = useCallback(debounce(updateQuery, 500), [searchValue]);
+
+  useEffect(() => {
+    delayedQuery();
+    return delayedQuery.cancel;
+  }, [delayedQuery]);
 
   return (
     <div className="mb-3">
@@ -14,8 +31,8 @@ const Input = () => {
         className='form-control'
         type='text'
         id='search'
-        value={searchByTitle}
-        onChange={(evt) => {dispatch(filterByTitleAction(evt.target.value))}}
+        value={searchValue}
+        onChange={onChange}
         placeholer='Search'/>
     </div>
   )
