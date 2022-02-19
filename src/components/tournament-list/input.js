@@ -24,7 +24,7 @@ const Input = () => {
 
   return (
     <div className="d-flex justify-content-end align-items-center my-3">
-      <label className="form-label me-3" htmlFor='search'>
+      <label className="form-label me-3 my-0" htmlFor='search'>
         Search: 
       </label>
       <input 
