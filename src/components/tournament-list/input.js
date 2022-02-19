@@ -23,7 +23,7 @@ const Input = () => {
   }, [delayedQuery]);
 
   return (
-    <div className="d-flex justify-content-end align-items-center my-3">
+    <div className="d-flex align-items-center my-3">
       <label className="form-label me-3 my-0" htmlFor='search'>
         Search: 
       </label>
