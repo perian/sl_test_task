@@ -3,22 +3,24 @@ import { fetchMoreTournaments } from "../../data-service/data-service";
 
 const Button = () => {
   const dispatch = useDispatch();
-  const isOutOfData = useSelector(state => state.tournaments.isOutOfData);
-  const pageNumber = useSelector(state => state.tournaments.pageNumber);
-  
+  const isOutOfData = useSelector((state) => state.tournaments.isOutOfData);
+  const pageNumber = useSelector((state) => state.tournaments.pageNumber);
+
   const getMoreTournaments = () => {
     dispatch(fetchMoreTournaments(pageNumber + 1));
-  }
+  };
 
   return (
-    <div className='text-center col-3 mx-auto'>
-      <button className='btn btn-primary mb-3' 
-              onClick={() => getMoreTournaments()}
-              disabled={isOutOfData}>
-              Need MORE tournaments!
+    <div className="text-center col-3 mx-auto">
+      <button
+        className="btn btn-primary mb-3"
+        onClick={() => getMoreTournaments()}
+        disabled={isOutOfData}
+      >
+        Need MORE tournaments!
       </button>
     </div>
-  )
-}
+  );
+};
 
 export default Button;
