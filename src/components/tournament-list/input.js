@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterByTitleAction } from "../../actions/actions";
-import debounce from 'lodash.debounce'
+import debounce from 'lodash.debounce';
 
 const Input = () => {
+  const DEBOUNCE_INTERVAL = 500;
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('')
 
@@ -15,7 +16,7 @@ const Input = () => {
     dispatch(filterByTitleAction(searchValue))
   };
 
-  const delayedQuery = useCallback(debounce(updateQuery, 500), [searchValue]);
+  const delayedQuery = useCallback(debounce(updateQuery, DEBOUNCE_INTERVAL), [searchValue]);
 
   useEffect(() => {
     delayedQuery();
