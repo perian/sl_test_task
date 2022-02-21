@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "axios": "^0.25.0",
-    "eslint-config-htmlacademy": "^5.0.0",
     "lodash": "^4.17.21",
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
