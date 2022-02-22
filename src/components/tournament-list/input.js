@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterByTitleAction } from "../../actions/actions";
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
+import { persistedState } from "../../store";
 
 const Input = () => {
   const DEBOUNCE_INTERVAL = 500;
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState(persistedState.searchByTitle);
 
   const onChange = (evt) => {
     setSearchValue(evt.target.value);
